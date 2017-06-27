@@ -1,0 +1,20 @@
+{ "version": "1.0",
+  "response": {
+    "shouldEndSession": false,
+    "outputSpeech": {
+      "type": "SSML",
+      "ssml": "<speak> Welcome to High Low guessing game. You have played 0 times. Would you like to play? </speak>"
+    },
+    "reprompt": {
+      "outputSpeech": {
+        "type": "SSML",
+        "ssml": "<speak> Say yes to start the game or no to quit. </speak>"
+      }
+    }
+  },
+  "sessionAttributes": {
+    "endedSessionCount": 0,
+    "gamesPlayed": 0,
+    "STATE": "_STARTMODE"
+  }
+}

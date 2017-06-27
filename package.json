@@ -1,0 +1,48 @@
+{
+  "name": "lambda-tester",
+  "version": "0.1.0",
+  "description": "A set of classes and tools that help you test your Lambda applications.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "npm run test-unit",
+    "test-unit": "NODE_ENV=test ./node_modules/.bin/rocha test/**/*.spec.js test/**/**/*.spec.js",
+    "coverage": "NODE_ENV=test ./node_modules/.bin/istanbul cover node_modules/rocha/bin/rocha.js -- test/**/*.spec.js test/**/**/*.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattrayner/lambda-tester.git"
+  },
+  "keywords": [
+    "AWS",
+    "lambda",
+    "testing",
+    "TDD",
+    "mocha",
+    "chai",
+    "lambdalocal",
+    "alexa",
+    "alexa-sdk"
+  ],
+  "author": "Matthew Rayner <hello@rayner.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mattrayner/lambda-tester/issues"
+  },
+  "homepage": "https://github.com/mattrayner/lambda-tester#readme",
+  "devDependencies": {
+    "alexa-sdk": "^1.0.11",
+    "chai": "^4.0.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.4.2",
+    "sinon-chai": "^2.11.0"
+  },
+  "dependencies": {
+    "clear-require": "^2.0.0",
+    "lambda-local": "^1.4.2",
+    "mock-require": "^2.0.2",
+    "mockery": "^2.1.0",
+    "rocha": "^2.4.1",
+    "sinon": "^2.3.5",
+    "winston": "^2.3.1"
+  }
+}
