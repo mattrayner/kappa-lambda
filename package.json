@@ -37,6 +37,7 @@
     "sinon-chai": "^2.11.0"
   },
   "dependencies": {
+    "aws-sdk": "^2.82.0",
     "clear-require": "^2.0.0",
     "lambda-local": "^1.4.2",
     "mock-require": "^2.0.2",
