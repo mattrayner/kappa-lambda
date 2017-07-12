@@ -18,7 +18,7 @@
 
     if (typeof window === 'undefined') {
         try {
-            AWS = ignoreRequire('../../../../node_modules/aws-sdk/lib/aws');
+            AWS = ignoreRequire('../../../../aws-sdk/lib/aws');
         }
         catch(err) {
             console.log('Failed to find project-level aws-sdk - trying package-level node_modules folder');
