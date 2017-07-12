@@ -9,68 +9,68 @@ const sinon = require('sinon');
 
 chai.use(sinonChai);
 
-const LambdaHelper = require('../../lib/index');
+const KappaLambda = require('../../lib/index');
 
-describe('LambdaHelper', function () {
+describe('KappaLambda', function () {
     describe('#constructor', function () {
-        let lambdaHelper;
+        let kappaLambda;
 
         context('without a region', function () {
             beforeEach(function(){
-                lambdaHelper = new LambdaHelper('../../examples/alexa-sdk/index.js');
+                kappaLambda = new KappaLambda('../../examples/alexa-sdk/index.js');
             });
 
             it('stores the lambdaFile', function () {
-                expect(lambdaHelper.lambdaFile).to.eql('../../examples/alexa-sdk/index.js');
+                expect(kappaLambda.lambdaFile).to.eql('../../examples/alexa-sdk/index.js');
             });
 
             it('stores the default region', function () {
-                expect(lambdaHelper.region).to.eql('eu-west-1');
+                expect(kappaLambda.region).to.eql('eu-west-1');
             })
         });
 
         context('with a region', function () {
             beforeEach(function () {
-                lambdaHelper = new LambdaHelper('../../examples/alexa-sdk/index.js', 'us-east-1');
+                kappaLambda = new KappaLambda('../../examples/alexa-sdk/index.js', 'us-east-1');
             });
 
             it('stores the lambdaFile', function () {
-                expect(lambdaHelper.lambdaFile).to.eql('../../examples/alexa-sdk/index.js');
+                expect(kappaLambda.lambdaFile).to.eql('../../examples/alexa-sdk/index.js');
             });
 
             it('stores the default region', function () {
-                expect(lambdaHelper.region).to.eql('us-east-1');
+                expect(kappaLambda.region).to.eql('us-east-1');
             })
         })
     });
 
     describe('#execute', function () {
-        let lambdaHelper;
+        let kappaLambda;
 
         beforeEach(function () {
-            lambdaHelper = new LambdaHelper('../examples/alexa-sdk/index.js');
+            kappaLambda = new KappaLambda('../examples/alexa-sdk/index.js');
         });
 
         context('with a valid event', function () {
             beforeEach(function(cb){
                 let event = require('../fixtures/examples/alexa-sdk/requests/LaunchRequest.json');
 
-                lambdaHelper.execute(event, cb);
+                kappaLambda.execute(event, cb);
             });
 
             it('populates done and not error', function () {
-                expect(lambdaHelper.done).to.be.an('object');
-                expect(lambdaHelper.error).to.be.an('null');
+                expect(kappaLambda.done).to.be.an('object');
+                expect(kappaLambda.error).to.be.an('null');
             });
 
             it('generates a response as expected', function () {
                 let response = require('../fixtures/examples/alexa-sdk/responses/LaunchRequest.json');
 
-                if(lambdaHelper.done.sessionAttributes.guessNumber) {
-                    response.sessionAttributes.guessNumber = lambdaHelper.done.sessionAttributes.guessNumber;
+                if(kappaLambda.done.sessionAttributes.guessNumber) {
+                    response.sessionAttributes.guessNumber = kappaLambda.done.sessionAttributes.guessNumber;
                 }
 
-                expect(lambdaHelper.done).to.deep.eql(response);
+                expect(kappaLambda.done).to.deep.eql(response);
             });
         });
 
@@ -78,12 +78,12 @@ describe('LambdaHelper', function () {
             beforeEach(function(cb){
                 let event = { session: { application: { applicationId: '1234' }, user: { userId: 'user123' } }, request: { locale: 'en-GB' } };
 
-                lambdaHelper.execute(event, cb);
+                kappaLambda.execute(event, cb);
             });
 
             it('populates error and not done', function () {
-                expect(lambdaHelper.done).to.be.an('undefined');
-                expect(lambdaHelper.error.message).to.include("Cannot read property 'substring' of undefined");
+                expect(kappaLambda.done).to.be.an('undefined');
+                expect(kappaLambda.error.message).to.include("Cannot read property 'substring' of undefined");
             });
         });
 
@@ -100,7 +100,7 @@ describe('LambdaHelper', function () {
                 beforeEach(function(cb){
                     let event = require('../fixtures/examples/alexa-sdk/requests/LaunchRequest.json');
 
-                    lambdaHelper.execute(event, cb, true);
+                    kappaLambda.execute(event, cb, true);
                 });
 
                 it('calls console.log as expected', function () {
@@ -113,7 +113,7 @@ describe('LambdaHelper', function () {
                 beforeEach(function(cb){
                     let event = { session: { application: { applicationId: '1234' }, user: { userId: 'user123' } }, request: { locale: 'en-GB' } };
 
-                    lambdaHelper.execute(event, cb, true);
+                    kappaLambda.execute(event, cb, true);
                 });
 
                 it('calls console.log as expected', function () {

@@ -9,9 +9,9 @@ const sinon = require('sinon');
 
 chai.use(sinonChai);
 
-const LambdaHelper = require('../../../lib/index');
+const KappaLambda = require('../../../lib/index');
 const lambdaFile = '../examples/alexa-sdk/index.js';
-const lambdaHelper = new LambdaHelper(lambdaFile);
+const kappaLambda = new KappaLambda(lambdaFile);
 
 describe('Alexa SDK Example', function(){
     context('No State', function(){
@@ -19,16 +19,16 @@ describe('Alexa SDK Example', function(){
             beforeEach(function(cb){
                 let event = require('../../fixtures/examples/alexa-sdk/requests/LaunchRequest.json');
 
-                lambdaHelper.execute(event, cb);
+                kappaLambda.execute(event, cb);
             });
 
             it('responds with the correct output text', function(){
-                expect(lambdaHelper.done.response.outputSpeech.ssml)
+                expect(kappaLambda.done.response.outputSpeech.ssml)
                     .to.eql('<speak> Welcome to High Low guessing game. You have played 0 times. Would you like to play? </speak>');
             });
 
             it('responds with the correct reprompt text', function(){
-                expect(lambdaHelper.done.response.reprompt.outputSpeech.ssml)
+                expect(kappaLambda.done.response.reprompt.outputSpeech.ssml)
                     .to.eql('<speak> Say yes to start the game or no to quit. </speak>');
             });
 
@@ -36,23 +36,23 @@ describe('Alexa SDK Example', function(){
                 beforeEach(function (cb) {
                     let event = require('../../fixtures/examples/alexa-sdk/requests/AMAZON.HelpIntent.json');
                     // Populate the session attribute from the last request in order to continue.
-                    event.session.attributes = lambdaHelper.done.sessionAttributes;
+                    event.session.attributes = kappaLambda.done.sessionAttributes;
 
-                    lambdaHelper.execute(event, cb);
+                    kappaLambda.execute(event, cb);
                 });
 
                 it('responds with the correct output text', function () {
-                    expect(lambdaHelper.done.response.outputSpeech.ssml)
+                    expect(kappaLambda.done.response.outputSpeech.ssml)
                         .to.eql('<speak> I will think of a number between zero and one hundred, try to guess and I will tell you if it is higher or lower. Do you want to start the game? </speak>')
                 });
 
                 it('responds with the correct reprompt text', function () {
-                    expect(lambdaHelper.done.response.reprompt.outputSpeech.ssml)
+                    expect(kappaLambda.done.response.reprompt.outputSpeech.ssml)
                         .to.eql('<speak> I will think of a number between zero and one hundred, try to guess and I will tell you if it is higher or lower. Do you want to start the game? </speak>')
                 });
 
                 it('responds with the correct state', function () {
-                    expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_STARTMODE');
+                    expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_STARTMODE');
                 });
             });
 
@@ -60,23 +60,23 @@ describe('Alexa SDK Example', function(){
                 beforeEach(function(cb){
                     let event = require('../../fixtures/examples/alexa-sdk/requests/AMAZON.YesIntent.json');
                     // Populate the session attribute from the last request in order to continue.
-                    event.session.attributes = lambdaHelper.done.sessionAttributes;
+                    event.session.attributes = kappaLambda.done.sessionAttributes;
 
-                    lambdaHelper.execute(event, cb);
+                    kappaLambda.execute(event, cb);
                 });
 
                 it('responds with the correct output text', function(){
-                    expect(lambdaHelper.done.response.outputSpeech.ssml)
+                    expect(kappaLambda.done.response.outputSpeech.ssml)
                         .to.eql('<speak> Great! Try saying a number to start the game. </speak>')
                 });
 
                 it('responds with the correct reprompt text', function() {
-                    expect(lambdaHelper.done.response.reprompt.outputSpeech.ssml)
+                    expect(kappaLambda.done.response.reprompt.outputSpeech.ssml)
                         .to.eql('<speak> Try saying a number. </speak>')
                 });
 
                 it('responds with the correct state', function(){
-                    expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
+                    expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
                 });
 
                 // Respond with Help
@@ -84,23 +84,23 @@ describe('Alexa SDK Example', function(){
                     beforeEach(function (cb) {
                         let event = require('../../fixtures/examples/alexa-sdk/requests/AMAZON.HelpIntent.json');
                         // Populate the session attribute from the last request in order to continue.
-                        event.session.attributes = lambdaHelper.done.sessionAttributes;
+                        event.session.attributes = kappaLambda.done.sessionAttributes;
 
-                        lambdaHelper.execute(event, cb);
+                        kappaLambda.execute(event, cb);
                     });
 
                     it('responds with the correct output text', function () {
-                        expect(lambdaHelper.done.response.outputSpeech.ssml)
+                        expect(kappaLambda.done.response.outputSpeech.ssml)
                             .to.eql('<speak> I am thinking of a number between zero and one hundred, try to guess and I will tell you if it is higher or lower. </speak>')
                     });
 
                     it('responds with the correct reprompt text', function () {
-                        expect(lambdaHelper.done.response.reprompt.outputSpeech.ssml)
+                        expect(kappaLambda.done.response.reprompt.outputSpeech.ssml)
                             .to.eql('<speak> Try saying a number. </speak>')
                     });
 
                     it('responds with the correct state', function () {
-                        expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
+                        expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
                     });
                 });
 
@@ -109,24 +109,24 @@ describe('Alexa SDK Example', function(){
                     beforeEach(function (cb) {
                         let event = require('../../fixtures/examples/alexa-sdk/requests/AMAZON.HelpIntent.json');
                         // Populate the session attribute from the last request in order to continue.
-                        event.session.attributes = lambdaHelper.done.sessionAttributes;
+                        event.session.attributes = kappaLambda.done.sessionAttributes;
                         event.request.intent.name = 'Foo';
 
-                        lambdaHelper.execute(event, cb);
+                        kappaLambda.execute(event, cb);
                     });
 
                     it('responds with the correct output text', function () {
-                        expect(lambdaHelper.done.response.outputSpeech.ssml)
+                        expect(kappaLambda.done.response.outputSpeech.ssml)
                             .to.eql('<speak> Sorry, I didn\'t get that. Try saying a number. </speak>')
                     });
 
                     it('responds with the correct reprompt text', function () {
-                        expect(lambdaHelper.done.response.reprompt.outputSpeech.ssml)
+                        expect(kappaLambda.done.response.reprompt.outputSpeech.ssml)
                             .to.eql('<speak> Try saying a number. </speak>')
                     });
 
                     it('responds with the correct state', function () {
-                        expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
+                        expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
                     });
                 });
 
@@ -137,9 +137,9 @@ describe('Alexa SDK Example', function(){
 
                         let event = require('../../fixtures/examples/alexa-sdk/requests/SessionEndedRequest.json');
                         // Populate the session attribute from the last request in order to continue.
-                        event.session.attributes = lambdaHelper.done.sessionAttributes;
+                        event.session.attributes = kappaLambda.done.sessionAttributes;
 
-                        lambdaHelper.execute(event, null, true);
+                        kappaLambda.execute(event, null, true);
                     });
 
                     afterEach(function() {
@@ -158,47 +158,47 @@ describe('Alexa SDK Example', function(){
                         beforeEach(function (cb) {
                             let event = require('../../fixtures/examples/alexa-sdk/requests/NumberGuessIntent.json');
                             // Populate the session attribute from the last request in order to continue.
-                            event.session.attributes = lambdaHelper.done.sessionAttributes;
-                            event.request.intent.slots.number.value = lambdaHelper.done.sessionAttributes.guessNumber;
+                            event.session.attributes = kappaLambda.done.sessionAttributes;
+                            event.request.intent.slots.number.value = kappaLambda.done.sessionAttributes.guessNumber;
 
-                            lambdaHelper.execute(event, cb);
+                            kappaLambda.execute(event, cb);
                         });
 
                         it('responds with the correct output text', function () {
-                            expect(lambdaHelper.done.response.outputSpeech.ssml)
-                                .to.eql('<speak> '+ lambdaHelper.done.sessionAttributes.guessNumber + ' is correct! Would you like to play a new game? </speak>')
+                            expect(kappaLambda.done.response.outputSpeech.ssml)
+                                .to.eql('<speak> '+ kappaLambda.done.sessionAttributes.guessNumber + ' is correct! Would you like to play a new game? </speak>')
                         });
 
                         it('responds with the correct reprompt text', function () {
-                            expect(lambdaHelper.done.response.reprompt.outputSpeech.ssml)
+                            expect(kappaLambda.done.response.reprompt.outputSpeech.ssml)
                                 .to.eql('<speak> Say yes to start a new game, or no to end the game. </speak>')
                         });
 
                         it('responds with the correct state', function () {
-                            expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_STARTMODE');
+                            expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_STARTMODE');
                         });
 
                         describe('responding with an AMAZON.YesIntent', function () {
                             beforeEach(function(cb){
                                 let event = require('../../fixtures/examples/alexa-sdk/requests/AMAZON.YesIntent.json');
                                 // Populate the session attribute from the last request in order to continue.
-                                event.session.attributes = lambdaHelper.done.sessionAttributes;
+                                event.session.attributes = kappaLambda.done.sessionAttributes;
 
-                                lambdaHelper.execute(event, cb);
+                                kappaLambda.execute(event, cb);
                             });
 
                             it('responds with the correct output text', function(){
-                                expect(lambdaHelper.done.response.outputSpeech.ssml)
+                                expect(kappaLambda.done.response.outputSpeech.ssml)
                                     .to.eql('<speak> Great! Try saying a number to start the game. </speak>')
                             });
 
                             it('responds with the correct reprompt text', function() {
-                                expect(lambdaHelper.done.response.reprompt.outputSpeech.ssml)
+                                expect(kappaLambda.done.response.reprompt.outputSpeech.ssml)
                                     .to.eql('<speak> Try saying a number. </speak>')
                             });
 
                             it('responds with the correct state', function(){
-                                expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
+                                expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
                             });
                         });
 
@@ -206,18 +206,18 @@ describe('Alexa SDK Example', function(){
                             beforeEach(function(cb){
                                 let event = require('../../fixtures/examples/alexa-sdk/requests/AMAZON.NoIntent.json');
                                 // Populate the session attribute from the last request in order to continue.
-                                event.session.attributes = lambdaHelper.done.sessionAttributes;
+                                event.session.attributes = kappaLambda.done.sessionAttributes;
 
-                                lambdaHelper.execute(event, cb);
+                                kappaLambda.execute(event, cb);
                             });
 
                             it('responds with the correct output text', function(){
-                                expect(lambdaHelper.done.response.outputSpeech.ssml)
+                                expect(kappaLambda.done.response.outputSpeech.ssml)
                                     .to.eql('<speak> Ok, see you next time! </speak>')
                             });
 
                             it('responds with the correct state', function(){
-                                expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_STARTMODE');
+                                expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_STARTMODE');
                             });
                         })
                     });
@@ -228,24 +228,24 @@ describe('Alexa SDK Example', function(){
                             beforeEach(function (cb) {
                                 let event = require('../../fixtures/examples/alexa-sdk/requests/NumberGuessIntent.json');
                                 // Populate the session attribute from the last request in order to continue.
-                                event.session.attributes = lambdaHelper.done.sessionAttributes;
-                                event.request.intent.slots.number.value = parseInt(lambdaHelper.done.sessionAttributes.guessNumber) - 1;
+                                event.session.attributes = kappaLambda.done.sessionAttributes;
+                                event.request.intent.slots.number.value = parseInt(kappaLambda.done.sessionAttributes.guessNumber) - 1;
 
-                                lambdaHelper.execute(event, cb);
+                                kappaLambda.execute(event, cb);
                             });
 
                             it('responds with the correct output text', function () {
-                                expect(lambdaHelper.done.response.outputSpeech.ssml)
-                                    .to.eql('<speak> Sorry, ' + (parseInt(lambdaHelper.done.sessionAttributes.guessNumber) - 1) + ' is too low. Say another number to try again, or say cancel to quit. </speak>')
+                                expect(kappaLambda.done.response.outputSpeech.ssml)
+                                    .to.eql('<speak> Sorry, ' + (parseInt(kappaLambda.done.sessionAttributes.guessNumber) - 1) + ' is too low. Say another number to try again, or say cancel to quit. </speak>')
                             });
 
                             it('responds with the correct reprompt text', function () {
-                                expect(lambdaHelper.done.response.reprompt.outputSpeech.ssml)
+                                expect(kappaLambda.done.response.reprompt.outputSpeech.ssml)
                                     .to.eql('<speak> Try saying a number, or, cancel, to quit. </speak>')
                             });
 
                             it('responds with the correct state', function () {
-                                expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
+                                expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
                             });
                         });
 
@@ -253,24 +253,24 @@ describe('Alexa SDK Example', function(){
                             beforeEach(function (cb) {
                                 let event = require('../../fixtures/examples/alexa-sdk/requests/NumberGuessIntent.json');
                                 // Populate the session attribute from the last request in order to continue.
-                                event.session.attributes = lambdaHelper.done.sessionAttributes;
-                                event.request.intent.slots.number.value = parseInt(lambdaHelper.done.sessionAttributes.guessNumber) + 1;
+                                event.session.attributes = kappaLambda.done.sessionAttributes;
+                                event.request.intent.slots.number.value = parseInt(kappaLambda.done.sessionAttributes.guessNumber) + 1;
 
-                                lambdaHelper.execute(event, cb);
+                                kappaLambda.execute(event, cb);
                             });
 
                             it('responds with the correct output text', function () {
-                                expect(lambdaHelper.done.response.outputSpeech.ssml)
-                                    .to.eql('<speak> Sorry, '+ (parseInt(lambdaHelper.done.sessionAttributes.guessNumber) + 1) + ' is too high. Say another number to try again, or say cancel to quit. </speak>')
+                                expect(kappaLambda.done.response.outputSpeech.ssml)
+                                    .to.eql('<speak> Sorry, '+ (parseInt(kappaLambda.done.sessionAttributes.guessNumber) + 1) + ' is too high. Say another number to try again, or say cancel to quit. </speak>')
                             });
 
                             it('responds with the correct reprompt text', function () {
-                                expect(lambdaHelper.done.response.reprompt.outputSpeech.ssml)
+                                expect(kappaLambda.done.response.reprompt.outputSpeech.ssml)
                                     .to.eql('<speak> Try saying a number, or, cancel, to quit. </speak>')
                             });
 
                             it('responds with the correct state', function () {
-                                expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
+                                expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
                             });
                         })
                     });
@@ -280,24 +280,24 @@ describe('Alexa SDK Example', function(){
                         beforeEach(function (cb) {
                             let event = require('../../fixtures/examples/alexa-sdk/requests/NumberGuessIntent.json');
                             // Populate the session attribute from the last request in order to continue.
-                            event.session.attributes = lambdaHelper.done.sessionAttributes;
+                            event.session.attributes = kappaLambda.done.sessionAttributes;
                             event.request.intent.slots.number.value = 'Foo';
 
-                            lambdaHelper.execute(event, cb);
+                            kappaLambda.execute(event, cb);
                         });
 
                         it('responds with the correct output text', function () {
-                            expect(lambdaHelper.done.response.outputSpeech.ssml)
+                            expect(kappaLambda.done.response.outputSpeech.ssml)
                                 .to.eql('<speak> Try saying a number </speak>')
                         });
 
                         it('responds with the correct reprompt text', function () {
-                            expect(lambdaHelper.done.response.reprompt.outputSpeech.ssml)
+                            expect(kappaLambda.done.response.reprompt.outputSpeech.ssml)
                                 .to.eql('<speak> Try saying a number, or, cancel, to quit. </speak>')
                         });
 
                         it('responds with the correct state', function () {
-                            expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
+                            expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_GUESSMODE');
                         });
                     });
 
@@ -308,22 +308,22 @@ describe('Alexa SDK Example', function(){
                 beforeEach(function(cb){
                     let event = require('../../fixtures/examples/alexa-sdk/requests/AMAZON.NoIntent.json');
                     // Populate the session attribute from the last request in order to continue.
-                    event.session.attributes = lambdaHelper.done.sessionAttributes;
+                    event.session.attributes = kappaLambda.done.sessionAttributes;
 
-                    lambdaHelper.execute(event, cb);
+                    kappaLambda.execute(event, cb);
                 });
 
                 it('responds with the correct output text', function(){
-                    expect(lambdaHelper.done.response.outputSpeech.ssml)
+                    expect(kappaLambda.done.response.outputSpeech.ssml)
                         .to.eql('<speak> Ok, see you next time! </speak>')
                 });
 
                 it('responds with the correct state', function(){
-                    expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_STARTMODE');
+                    expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_STARTMODE');
                 });
 
                 it('responds with the correct gamesPlayed value', function(){
-                    expect(lambdaHelper.done.sessionAttributes.gamesPlayed).to.eql(0);
+                    expect(kappaLambda.done.sessionAttributes.gamesPlayed).to.eql(0);
                 })
             });
 
@@ -331,24 +331,24 @@ describe('Alexa SDK Example', function(){
                 beforeEach(function (cb) {
                     let event = require('../../fixtures/examples/alexa-sdk/requests/AMAZON.HelpIntent.json');
                     // Populate the session attribute from the last request in order to continue.
-                    event.session.attributes = lambdaHelper.done.sessionAttributes;
+                    event.session.attributes = kappaLambda.done.sessionAttributes;
                     event.request.intent.name = 'Foo';
 
-                    lambdaHelper.execute(event, cb, true);
+                    kappaLambda.execute(event, cb, true);
                 });
 
                 it('responds with the correct output text', function () {
-                    expect(lambdaHelper.done.response.outputSpeech.ssml)
+                    expect(kappaLambda.done.response.outputSpeech.ssml)
                         .to.eql('<speak> Say yes to continue, or no to end the game. </speak>')
                 });
 
                 it('responds with the correct reprompt text', function () {
-                    expect(lambdaHelper.done.response.reprompt.outputSpeech.ssml)
+                    expect(kappaLambda.done.response.reprompt.outputSpeech.ssml)
                         .to.eql('<speak> Say yes to continue, or no to end the game. </speak>')
                 });
 
                 it('responds with the correct state', function () {
-                    expect(lambdaHelper.done.sessionAttributes.STATE).to.eql('_STARTMODE');
+                    expect(kappaLambda.done.sessionAttributes.STATE).to.eql('_STARTMODE');
                 });
             });
 
@@ -358,9 +358,9 @@ describe('Alexa SDK Example', function(){
 
                     let event = require('../../fixtures/examples/alexa-sdk/requests/SessionEndedRequest.json');
                     // Populate the session attribute from the last request in order to continue.
-                    event.session.attributes = lambdaHelper.done.sessionAttributes;
+                    event.session.attributes = kappaLambda.done.sessionAttributes;
 
-                    lambdaHelper.execute(event, null, true);
+                    kappaLambda.execute(event, null, true);
                 });
 
                 afterEach(function() {

@@ -1,5 +1,5 @@
 {
-  "name": "lambda-tester",
+  "name": "kappa-lambda",
   "version": "0.1.0",
   "description": "A set of classes and tools that help you test your Lambda applications with mocha and chai.",
   "main": "lib/index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mattrayner/lambda-tester.git"
+    "url": "git+https://github.com/mattrayner/kappa-lambda.git"
   },
   "keywords": [
     "AWS",
@@ -26,9 +26,9 @@
   "author": "Matthew Rayner <hello@rayner.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mattrayner/lambda-tester/issues"
+    "url": "https://github.com/mattrayner/kappa-lambda/issues"
   },
-  "homepage": "https://github.com/mattrayner/lambda-tester#readme",
+  "homepage": "https://github.com/mattrayner/kappa-lambda#readme",
   "devDependencies": {
     "alexa-sdk": "^1.0.11",
     "chai": "^4.0.2",
