@@ -42,7 +42,7 @@ At the top of your test file, create a new KappaLambda and create a variable poi
 The following code is all taken from `test/examples/alexa-sdk/index.spec.js`.
 
 ```javascript
-const KappaLambda = require('../../../lib/index');
+const KappaLambda = require('kappa-lambda');
 const lambdaFile = '../examples/alexa-sdk/index.js';
 const kappaLambda = new KappaLambda(lambdaFile);
 ```
